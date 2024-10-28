@@ -11,6 +11,7 @@ export const Body = styled.div`
   width: 33%;
   text-align: center;
   background-color: seagreen;
+  border-radius: 8px;
   margin: auto;
   padding: 25px;
 `
@@ -58,4 +59,7 @@ export const LoginButton = styled.button`
   height: 34px;
   cursor: pointer;
   font-weight: bold;
+`
+export const ErrorMsg = styled.p`
+  color: red;
 `

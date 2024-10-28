@@ -1,4 +1,6 @@
 import {Component} from 'react'
+import Cookies from 'js-cookie'
+import {Redirect} from 'react-router-dom'
 import {
   Home,
   Body,
@@ -9,6 +11,7 @@ import {
   LabelText,
   CheckboxInputBox,
   LoginButton,
+  ErrorMsg,
 } from './styled'
 
 class Login extends Component {
@@ -16,6 +19,8 @@ class Login extends Component {
     username: '',
     password: '',
     showPassword: false,
+    showError: false,
+    errorMsg: '',
   }
 
   onChangeUsername = event => {
@@ -30,15 +35,42 @@ class Login extends Component {
     this.setState(prev => ({showPassword: !prev.showPassword}))
   }
 
-  onSubmitForm = event => {
+  onSubmitForm = async event => {
     event.preventDefault()
     const {username, password} = this.state
     // Make ApiCall
+    const apiUrl = 'https://apis.ccbp.in/login'
+    const body = {username, password}
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }
+    const response = await fetch(apiUrl, options)
+    if (response.ok) {
+      const data = await response.json()
+      Cookies.set('jwt_token', data.jwt_token, {expires: 7})
+      this.setState(prev => ({
+        username: '',
+        password: '',
+        showError: !prev.showError,
+      }))
+      const {history} = this.props
+      history.push('/')
+    } else {
+      const data = await response.json()
+      this.setState(prev => ({
+        showError: !prev.showError,
+        errorMsg: data.error_msg,
+      }))
+    }
   }
 
   render() {
-    const {username, password, showPassword} = this.state
-    console.log(showPassword)
+    const getCookies = Cookies.get('jwt_token')
+    if (getCookies !== undefined) {
+      return <Redirect to="/" />
+    }
+    const {username, password, showPassword, showError, errorMsg} = this.state
     return (
       <Home>
         <Body>
@@ -54,6 +86,7 @@ class Login extends Component {
                 placeholder="Username"
                 value={username}
                 id="username"
+                onChange={this.onChangeUsername}
               />
             </InputBox>
             <InputBox>
@@ -61,8 +94,9 @@ class Login extends Component {
               <Input
                 value={password}
                 placeholder="Password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
+                onChange={this.onChangePassword}
               />
             </InputBox>
 
@@ -74,8 +108,11 @@ class Login extends Component {
               />
               <label htmlFor="checkbox">Show Password</label>
             </CheckboxInputBox>
-            <LoginButton type="submit">Login</LoginButton>
+            <LoginButton type="submit" onClick={this.onSubmitForm}>
+              Login
+            </LoginButton>
           </form>
+          {showError && <ErrorMsg>{errorMsg}</ErrorMsg>}
         </Body>
       </Home>
     )
