@@ -1,21 +1,41 @@
-import {MdNightlightRound} from 'react-icons/md'
+import Cookies from 'js-cookie'
+import {withRouter} from 'react-router-dom'
 
-const Header = () => {
-  const a = 10
+import {
+  HeaderDiv,
+  AccountSection,
+  HeaderHome,
+  AccountImage,
+  HeaderLogo,
+} from './styled'
+
+const Header = props => {
+  const onClickLogout = () => {
+    Cookies.remove('jwt_token')
+    const {history} = props
+    history.replace('/login')
+  }
   return (
-    <div>
-      <div>
-        <img src="" alt="" />
-      </div>
-      <div>
-        <img
-          src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png"
-          alt="profile"
-        />
-        <button type="button">Logout</button>
-      </div>
-    </div>
+    <HeaderHome>
+      <HeaderDiv>
+        <div>
+          <HeaderLogo
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+            alt=""
+          />
+        </div>
+        <AccountSection>
+          <AccountImage
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png"
+            alt="profile"
+          />
+          <button type="button" onClick={onClickLogout}>
+            Logout
+          </button>
+        </AccountSection>
+      </HeaderDiv>
+    </HeaderHome>
   )
 }
 
-export default Header
+export default withRouter(Header)

@@ -55,7 +55,7 @@ class Login extends Component {
         showError: !prev.showError,
       }))
       const {history} = this.props
-      history.push('/')
+      history.replace('/')
     } else {
       const data = await response.json()
       this.setState(prev => ({
