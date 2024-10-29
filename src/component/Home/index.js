@@ -1,6 +1,8 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+import Loader from 'react-loader-spinner'
 
+import {IoIosSearch} from 'react-icons/io'
 import {IoCloseOutline} from 'react-icons/io5'
 import Header from '../Header'
 import SideBarComponent from '../SideBar'
@@ -13,6 +15,10 @@ import {
   AdDiv1,
   MainSection,
   MemberShipButton,
+  VideosUlContainer,
+  SearchBoxDiv,
+  SearchInput,
+  SearchInputButton,
 } from './styled'
 
 const ApiConstants = {
@@ -27,6 +33,7 @@ class Home extends Component {
     showAd: true,
     apiStatus: ApiConstants.initial,
     allVideoList: [],
+    searchInput: '',
   }
 
   componentDidMount() {
@@ -34,6 +41,7 @@ class Home extends Component {
   }
 
   getAllVideos = async () => {
+    this.setState({apiStatus: ApiConstants.progress})
     const getCookies = Cookies.get('jwt_token')
     const apiUrl = `https://apis.ccbp.in/videos/all?search=`
     const options = {
@@ -53,9 +61,9 @@ class Home extends Component {
         viewCount: each.view_count,
         publishedAt: each.published_at,
       }))
-      this.setState({allVideoList: updateData})
+      this.setState({allVideoList: updateData, apiStatus: ApiConstants.success})
     } else {
-      console.log('Error')
+      this.setState({apiStatus: ApiConstants.failure})
     }
   }
 
@@ -63,8 +71,59 @@ class Home extends Component {
     this.setState(prev => ({showAd: !prev.showAd}))
   }
 
+  onSubmitSearchInputs = event => {
+    event.preventDefault()
+    const {searchInput, allVideoList} = this.state
+    // filter array based on input value;
+  }
+
+  onChangeSearchInput = event => {
+    this.setState({searchInput: event.target.value})
+  }
+
+  showBottomSection = () => {
+    const {allVideoList} = this.state
+    return (
+      <>
+        <SearchBoxDiv as="form" onSubmit={this.onSubmitSearchInputs}>
+          <SearchInput
+            onChange={this.onChangeSearchInput}
+            type="text"
+            placeholder="Search"
+          />
+          <SearchInputButton type="submit">
+            <IoIosSearch />
+          </SearchInputButton>
+        </SearchBoxDiv>
+        <VideosUlContainer>
+          {allVideoList.map(each => (
+            <RenderVideoList videoList={each} key={each.id} />
+          ))}
+        </VideosUlContainer>
+      </>
+    )
+  }
+
+  showRenderingView = () => (
+    <div className="loader-container" data-testid="loader">
+      <Loader type="ThreeDots" color="#ffffff" height={50} width={50} />
+    </div>
+  )
+
+  renderAllViews = () => {
+    const {apiStatus} = this.state
+    switch (apiStatus) {
+      case 'PROGRESS':
+        return this.showRenderingView()
+      case 'SUCCESS':
+        return this.showBottomSection()
+      default:
+        return null
+    }
+  }
+
   render() {
-    const {showAd, allVideoList} = this.state
+    const {showAd} = this.state
     return (
       <>
         <Header />
@@ -86,12 +145,8 @@ class Home extends Component {
                 <MemberShipButton type="button">GET IT NOW</MemberShipButton>
               </Advertisement>
             )}
-            <h1>All Your Code Goes Here</h1>
-            <ul>
-              {allVideoList.map(each => (
-                <RenderVideoList videoList={each} key={each.id} />
-              ))}
-            </ul>
+            {/* Main Section Starts */}
+            {this.renderAllViews()}
           </MainSection>
         </Main>
       </>

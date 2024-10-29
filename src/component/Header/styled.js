@@ -17,6 +17,7 @@ export const AccountImage = styled.img`
 
 export const HeaderHome = styled.div`
   padding-top: 20px;
+  margin-bottom: 20px;
 `
 
 export const AccountSection = styled.div`

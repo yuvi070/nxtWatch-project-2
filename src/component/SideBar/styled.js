@@ -20,7 +20,6 @@ export const SideBar = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: seagreen;
   padding-bottom: 15px;
   padding-left: 25px;
 `
