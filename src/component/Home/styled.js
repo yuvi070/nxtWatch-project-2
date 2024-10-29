@@ -1,43 +1,15 @@
 import styled from 'styled-components'
 
-export const SideBar = styled.div`
-  width: 20%;
-  height: 89vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: seagreen;
-  padding-bottom: 15px;
-  padding-left: 25px;
-`
-export const OptionDiv = styled.div`
-  display: flex;
-  font-size: 23px;
-  align-items: center;
-`
-
 export const Main = styled.div`
   display: flex;
   width: 100%;
 `
-export const SideBarRoutes = styled.p`
-  margin-left: 15px;
-`
-export const SideBarDiv1 = styled.div`
-  line-height: 2px;
-`
-export const SocialMediaDiv = styled.div`
-  display: flex;
-`
 
-export const SocialMediaImage = styled.img`
-  width: 40px;
-  margin-right: 10px;
-`
 export const MainSection = styled.div`
   background-color: yellowgreen;
   width: 80%;
   max-height: 90vh;
+  overflow: auto;
 `
 export const Advertisement = styled.div`
   background-image: url('https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png');
@@ -59,4 +31,8 @@ export const MemberShipButton = styled.button`
   padding: 7px;
   font-size: 18px;
   cursor: pointer;
+`
+export const UlContainer = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
 `

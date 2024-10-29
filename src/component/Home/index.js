@@ -1,12 +1,10 @@
 import {Component} from 'react'
+import Cookies from 'js-cookie'
 
-import {AiFillHome} from 'react-icons/ai'
-import {FaFire} from 'react-icons/fa'
-import {SiYoutubegaming} from 'react-icons/si'
-import {MdPlaylistAdd} from 'react-icons/md'
 import {IoCloseOutline} from 'react-icons/io5'
-
 import Header from '../Header'
+import SideBarComponent from '../SideBar'
+import RenderVideoList from '../RenderVideoList'
 
 import {
   Main,
@@ -14,18 +12,51 @@ import {
   AdImage,
   AdDiv1,
   MainSection,
-  SocialMediaImage,
-  SocialMediaDiv,
-  SideBarDiv1,
-  SideBarRoutes,
-  SideBar,
-  OptionDiv,
   MemberShipButton,
 } from './styled'
+
+const ApiConstants = {
+  initial: 'INITIAL',
+  progress: 'PROGRESS',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
 
 class Home extends Component {
   state = {
     showAd: true,
+    apiStatus: ApiConstants.initial,
+    allVideoList: [],
+  }
+
+  componentDidMount() {
+    this.getAllVideos()
+  }
+
+  getAllVideos = async () => {
+    const getCookies = Cookies.get('jwt_token')
+    const apiUrl = `https://apis.ccbp.in/videos/all?search=`
+    const options = {
+      headers: {
+        Authorization: `bearer ${getCookies}`,
+      },
+    }
+    const response = await fetch(apiUrl, options)
+
+    if (response.ok) {
+      const data = await response.json()
+      const updateData = data.videos.map(each => ({
+        id: each.id,
+        title: each.title,
+        thumbnailUrl: each.thumbnail_url,
+        channel: each.channel,
+        viewCount: each.view_count,
+        publishedAt: each.published_at,
+      }))
+      this.setState({allVideoList: updateData})
+    } else {
+      console.log('Error')
+    }
   }
 
   AdvertisementBanner = () => {
@@ -33,49 +64,12 @@ class Home extends Component {
   }
 
   render() {
-    const {showAd} = this.state
+    const {showAd, allVideoList} = this.state
     return (
       <>
         <Header />
         <Main>
-          <SideBar>
-            <SideBarDiv1>
-              <OptionDiv>
-                <AiFillHome />
-                <SideBarRoutes>Home</SideBarRoutes>
-              </OptionDiv>
-              <OptionDiv>
-                <FaFire />
-                <SideBarRoutes>Trending</SideBarRoutes>
-              </OptionDiv>
-              <OptionDiv>
-                <SiYoutubegaming />
-                <SideBarRoutes>Gaming</SideBarRoutes>
-              </OptionDiv>
-              <OptionDiv>
-                <MdPlaylistAdd />
-                <SideBarRoutes>Saved Videos</SideBarRoutes>
-              </OptionDiv>
-            </SideBarDiv1>
-            <div>
-              <h3>Contact Us</h3>
-              <SocialMediaDiv>
-                <SocialMediaImage
-                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
-                  alt="facebook logo"
-                />
-                <SocialMediaImage
-                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
-                  alt="twitter logo"
-                />
-                <SocialMediaImage
-                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-                  alt="linkedin logo"
-                />
-              </SocialMediaDiv>
-              <p>Enjoy! Now you can see your recommendations</p>
-            </div>
-          </SideBar>
+          <SideBarComponent />
           <MainSection>
             {showAd && (
               <Advertisement>
@@ -93,6 +87,11 @@ class Home extends Component {
               </Advertisement>
             )}
             <h1>All Your Code Goes Here</h1>
+            <ul>
+              {allVideoList.map(each => (
+                <RenderVideoList videoList={each} key={each.id} />
+              ))}
+            </ul>
           </MainSection>
         </Main>
       </>
