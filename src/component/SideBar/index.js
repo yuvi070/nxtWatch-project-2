@@ -1,3 +1,5 @@
+import myContext from './context/myContext'
+
 import {AiFillHome} from 'react-icons/ai'
 import {FaFire} from 'react-icons/fa'
 import {SiYoutubegaming} from 'react-icons/si'

@@ -12,17 +12,29 @@ import './App.css'
 class App extends Component {
   state = {
     isDark: false,
+    activeRoute: 'Home',
   }
 
   changeTheme = () => {
     this.setState(prev => ({isDark: !prev.isDark}))
   }
 
+  changeRoute = id => {
+    this.setState({activeRoute: id})
+  }
+
   render() {
-    const {isDark} = this.state
+    const {isDark, activeRoute} = this.state
     return (
       <Switch>
-        <myContext.Provider value={{isDark}}>
+        <myContext.Provider
+          value={{
+            isDark,
+            changeTheme: this.changeTheme,
+            changeRoute: this.changeRoute,
+            activeRoute,
+          }}
+        >
           <Route exact path="/login" component={Login} />
           <ProtectedRoute exact path="/" component={Home} />
         </myContext.Provider>

@@ -4,6 +4,12 @@ import Loader from 'react-loader-spinner'
 
 import {IoIosSearch} from 'react-icons/io'
 import {IoCloseOutline} from 'react-icons/io5'
+
+import {AiFillHome} from 'react-icons/ai'
+import {FaFire} from 'react-icons/fa'
+import {SiYoutubegaming} from 'react-icons/si'
+import {MdPlaylistAdd} from 'react-icons/md'
+
 import Header from '../Header'
 import SideBarComponent from '../SideBar'
 import RenderVideoList from '../RenderVideoList'
@@ -19,6 +25,13 @@ import {
   SearchBoxDiv,
   SearchInput,
   SearchInputButton,
+  SocialMediaImage,
+  SocialMediaDiv,
+  SideBarDiv1,
+  SideBarRoutes,
+  SideBar,
+  OptionDiv,
+  HomeOption,
 } from './styled'
 
 const ApiConstants = {
@@ -38,6 +51,7 @@ class Home extends Component {
 
   componentDidMount() {
     this.getAllVideos()
+    // setInterval(this.getAllVideos, 1000)
   }
 
   getAllVideos = async () => {
@@ -73,8 +87,16 @@ class Home extends Component {
 
   onSubmitSearchInputs = event => {
     event.preventDefault()
-    const {searchInput, allVideoList} = this.state
-    // filter array based on input value;
+    // const {searchInput, allVideoList} = this.state
+    // // filter array based on input value;
+    // // const filteredArray = allVidoeList.inlcude
+    // const filteredArray = allVideoList.filter(each => {
+    //   const lowerTitle = each.title.toLowerCase()
+    //   const lowerInput = searchInput.toLowerCase()
+    //   return lowerTitle.includes(lowerInput)
+    // })
+    // this.setState({allVideoList: filteredArray})
+    this.onChangeSearchInput()
   }
 
   onChangeSearchInput = event => {
@@ -82,7 +104,12 @@ class Home extends Component {
   }
 
   showBottomSection = () => {
-    const {allVideoList} = this.state
+    const {allVideoList, searchInput} = this.state
+    const searchResult = allVideoList.filter(each => {
+      const lowerTitle = each.title.toLowerCase()
+      const lowerInput = searchInput.toLowerCase()
+      return lowerTitle.includes(lowerInput)
+    })
     return (
       <>
         <SearchBoxDiv as="form" onSubmit={this.onSubmitSearchInputs}>
@@ -96,7 +123,7 @@ class Home extends Component {
           </SearchInputButton>
         </SearchBoxDiv>
         <VideosUlContainer>
-          {allVideoList.map(each => (
+          {searchResult.map(each => (
             <RenderVideoList videoList={each} key={each.id} />
           ))}
         </VideosUlContainer>
@@ -122,6 +149,49 @@ class Home extends Component {
     }
   }
 
+  showSideBar = () => (
+    <SideBar>
+      <SideBarDiv1>
+        <HomeOption>
+          <div>
+            <AiFillHome />
+            <SideBarRoutes>Home</SideBarRoutes>
+          </div>
+        </HomeOption>
+        <OptionDiv>
+          <FaFire />
+          <SideBarRoutes>Trending</SideBarRoutes>
+        </OptionDiv>
+        <OptionDiv>
+          <SiYoutubegaming />
+          <SideBarRoutes>Gaming</SideBarRoutes>
+        </OptionDiv>
+        <OptionDiv>
+          <MdPlaylistAdd />
+          <SideBarRoutes>Saved Videos</SideBarRoutes>
+        </OptionDiv>
+      </SideBarDiv1>
+      <div>
+        <h3>Contact Us</h3>
+        <SocialMediaDiv>
+          <SocialMediaImage
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
+            alt="facebook logo"
+          />
+          <SocialMediaImage
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
+            alt="twitter logo"
+          />
+          <SocialMediaImage
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
+            alt="linkedin logo"
+          />
+        </SocialMediaDiv>
+        <p>Enjoy! Now you can see your recommendations</p>
+      </div>
+    </SideBar>
+  )
+
   render() {
     const {showAd} = this.state
     return (
@@ -129,6 +199,7 @@ class Home extends Component {
         <Header />
         <Main>
           <SideBarComponent />
+          {/* {this.showSideBar()} */}
           <MainSection>
             {showAd && (
               <Advertisement>
