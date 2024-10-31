@@ -48,3 +48,19 @@ export const HomeOption = styled(OptionDiv)`
   color: #ff0000;
   text-decoration: none;
 `
+export const TrendingSectionHead = styled.div`
+  display: flex;
+  align-items: center;
+`
+export const Div1 = styled.div`
+  background-color: yellowgreen;
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  font-size: 25px;
+`
