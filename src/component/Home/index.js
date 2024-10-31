@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 
@@ -13,6 +14,7 @@ import {MdPlaylistAdd} from 'react-icons/md'
 import Header from '../Header'
 import SideBarComponent from '../SideBar'
 import RenderVideoList from '../RenderVideoList'
+import './index.css'
 
 import {
   Main,
@@ -118,7 +120,7 @@ class Home extends Component {
             type="text"
             placeholder="Search"
           />
-          <SearchInputButton type="submit">
+          <SearchInputButton type="submit" disabled>
             <IoIosSearch />
           </SearchInputButton>
         </SearchBoxDiv>
@@ -152,24 +154,31 @@ class Home extends Component {
   showSideBar = () => (
     <SideBar>
       <SideBarDiv1>
-        <HomeOption>
-          <div>
+        <Link to="/" className="link-text">
+          <HomeOption>
             <AiFillHome />
             <SideBarRoutes>Home</SideBarRoutes>
-          </div>
-        </HomeOption>
-        <OptionDiv>
-          <FaFire />
-          <SideBarRoutes>Trending</SideBarRoutes>
-        </OptionDiv>
-        <OptionDiv>
-          <SiYoutubegaming />
-          <SideBarRoutes>Gaming</SideBarRoutes>
-        </OptionDiv>
-        <OptionDiv>
-          <MdPlaylistAdd />
-          <SideBarRoutes>Saved Videos</SideBarRoutes>
-        </OptionDiv>
+          </HomeOption>
+        </Link>
+        <Link to="/trending" className="link-text">
+          <OptionDiv>
+            <FaFire />
+            <SideBarRoutes>Trending</SideBarRoutes>
+          </OptionDiv>
+        </Link>
+
+        <Link to="/gaming" className="link-text">
+          <OptionDiv>
+            <SiYoutubegaming />
+            <SideBarRoutes>Gaming</SideBarRoutes>
+          </OptionDiv>
+        </Link>
+        <Link to="/saved" className="link-text">
+          <OptionDiv>
+            <MdPlaylistAdd />
+            <SideBarRoutes>Saved Videos</SideBarRoutes>
+          </OptionDiv>
+        </Link>
       </SideBarDiv1>
       <div>
         <h3>Contact Us</h3>
@@ -198,8 +207,8 @@ class Home extends Component {
       <>
         <Header />
         <Main>
-          <SideBarComponent />
-          {/* {this.showSideBar()} */}
+          {/* <SideBarComponent /> */}
+          {this.showSideBar()}
           <MainSection>
             {showAd && (
               <Advertisement>
