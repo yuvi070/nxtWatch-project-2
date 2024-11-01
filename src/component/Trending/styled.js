@@ -64,3 +64,6 @@ export const Div1 = styled.div`
   margin-right: 20px;
   font-size: 25px;
 `
+export const TrendingUlContainer = styled.ul`
+  padding-left: 0px;
+`

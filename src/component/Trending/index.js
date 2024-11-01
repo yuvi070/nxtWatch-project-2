@@ -22,6 +22,7 @@ import {
   Main,
   TrendingSectionHead,
   Div1,
+  TrendingUlContainer,
 } from './styled'
 
 const ApiConstants = {
@@ -124,6 +125,8 @@ class Trending extends Component {
 
   showSuccess = () => {
     const {trendingVideosList} = this.state
+    console.log(trendingVideosList)
+    trendingVideosList.map(each => console.log(each.title))
     return (
       <MainSection>
         <TrendingSectionHead>
@@ -132,11 +135,17 @@ class Trending extends Component {
           </Div1>
           <h1>Trending</h1>
         </TrendingSectionHead>
-        <ul>
+        <TrendingUlContainer>
           {trendingVideosList.map(each => (
             <VideoList each={each} key={each.id} />
           ))}
-        </ul>
+        </TrendingUlContainer>
+        {/* <ul>
+          {trendingVideosList.map(each => (
+            <li>{each.title}</li>
+          ))}
+        </ul> */}
+        {console.log(trendingVideosList.map(each => each.title))}
       </MainSection>
     )
   }

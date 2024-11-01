@@ -99,3 +99,42 @@ export const HomeOption = styled(OptionDiv)`
   color: #ff0000;
   text-decoration: none;
 `
+// VideoCard, ThumbnailImage, VideoDiv1, VideoDiv2
+
+export const VideoCard = styled.li`
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+  list-style: none;
+  font-family: Roboto;
+`
+
+export const ThumbnailImage = styled.img`
+  width: 35%;
+`
+export const VideoDiv1 = styled.div`
+  margin-left: 15px;
+`
+export const VideoDiv2 = styled.div`
+  display: flex;
+  align-items: center;
+`
+export const TrendingSectionHead = styled.div`
+  display: flex;
+  align-items: center;
+`
+export const Div1 = styled.div`
+  background-color: yellowgreen;
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  font-size: 25px;
+`
+export const TrendingUlContainer = styled.ul`
+  padding-left: 0px;
+`

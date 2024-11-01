@@ -7,6 +7,7 @@ import {SiYoutubegaming} from 'react-icons/si'
 import {MdPlaylistAdd} from 'react-icons/md'
 
 import Header from '../Header'
+import VideoList from '../VideosList'
 
 import {
   SocialMediaImage,
@@ -18,9 +19,102 @@ import {
   HomeOption,
   MainSection,
   Main,
+  VideoCard,
+  ThumbnailImage,
+  VideoDiv1,
+  VideoDiv2,
+  Div1,
+  TrendingSectionHead,
+  TrendingUlContainer,
 } from './styled'
 
+const ApiConstants = {
+  initial: 'INITIAL',
+  progress: 'PROGRESS',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
+
 class Saved extends Component {
+  state = {
+    trendingVideosList: [],
+    apiStatus: ApiConstants.initial,
+  }
+
+  //   componentDidMount() {
+  //     this.getTrendingVideos()
+  //   }
+
+  //   getTrendingVideos = async () => {
+  //     this.setState({apiStatus: ApiConstants.progress})
+  //     const jwtToken = Cookies.get('jwt_token')
+  //     const apiUrl = 'https://apis.ccbp.in/videos/trending'
+  //     const options = {
+  //       headers: {
+  //         Authorization: `bearer ${jwtToken}`,
+  //       },
+  //     }
+  //     const response = await fetch(apiUrl, options)
+  //     if (response.ok) {
+  //       const data = await response.json()
+  //       const formattedData = data.videos.map(each => ({
+  //         id: each.id,
+  //         channel: each.channel,
+  //         publishedAt: each.published_at,
+  //         thumbnailUrl: each.thumbnail_url,
+  //         title: each.title,
+  //         viewCount: each.view_count,
+  //       }))
+  //       this.setState({
+  //         trendingVideosList: formattedData,
+  //         apiStatus: ApiConstants.success,
+  //       })
+  //     } else {
+  //       this.setState({apiStatus: ApiConstants.failure})
+  //     }
+  //   }
+
+  showProgress = () => <h1>Progress</h1>
+
+  showSuccess = () => {
+    const {trendingVideosList} = this.state
+    console.log(trendingVideosList)
+    trendingVideosList.map(each => console.log(each.title))
+    return (
+      <MainSection>
+        <TrendingSectionHead>
+          <Div1>
+            <FaFire />
+          </Div1>
+          <h1>Trending</h1>
+        </TrendingSectionHead>
+        <TrendingUlContainer>
+          {trendingVideosList.map(each => (
+            <VideoList each={each} key={each.id} />
+          ))}
+        </TrendingUlContainer>
+        {/* <ul>
+          {trendingVideosList.map(each => (
+            <li>{each.title}</li>
+          ))}
+        </ul> */}
+        {console.log(trendingVideosList.map(each => each.title))}
+      </MainSection>
+    )
+  }
+
+  renderView = () => {
+    const {apiStatus} = this.state
+    switch (apiStatus) {
+      case 'PROGRESS':
+        return this.showProgress()
+      case 'SUCCESS':
+        return this.showSuccess()
+      default:
+        return null
+    }
+  }
+
   showSideBar = () => (
     <SideBar>
       <SideBarDiv1>
