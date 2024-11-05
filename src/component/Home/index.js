@@ -135,7 +135,7 @@ class Home extends Component {
 
   showRenderingView = () => (
     <div className="loader-container" data-testid="loader">
-      <Loader type="ThreeDots" color="#ffffff" height={50} width={50} />
+      <Loader type="ThreeDots" color="#000000" height={50} width={50} />
     </div>
   )
 

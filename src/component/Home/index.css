@@ -1,3 +1,10 @@
 .link-text {
   text-decoration: none;
 }
+.loader-container {
+  display: flex;
+  height: 60vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

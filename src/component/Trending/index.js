@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {Link} from 'react-router-dom'
+import Loader from 'react-loader-spinner'
 
 import {AiFillHome} from 'react-icons/ai'
 import {FaFire} from 'react-icons/fa'
@@ -121,7 +122,11 @@ class Trending extends Component {
     </SideBar>
   )
 
-  showProgress = () => <h1>Progress</h1>
+  showProgress = () => (
+    <div className="loader-container" data-testid="loader">
+      <Loader type="ThreeDots" color="#000000" height={50} width={50} />
+    </div>
+  )
 
   showSuccess = () => {
     const {trendingVideosList} = this.state
