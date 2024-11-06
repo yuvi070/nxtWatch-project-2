@@ -4,9 +4,9 @@ const GamingList = props => {
   const {each} = props
   return (
     <GamingCard>
-      <GameImage src="" alt="" />
-      <h4>Title</h4>
-      <p>Para</p>
+      <GameImage src={each.thumbnail_url} alt="" />
+      <h4>{each.title}</h4>
+      <p>{each.view_count} Watching Worldwide</p>
     </GamingCard>
   )
 }

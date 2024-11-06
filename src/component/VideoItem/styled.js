@@ -43,11 +43,11 @@ export const OptionDiv = styled.div`
   text-decoration: none;
   padding-left: 25px;
 `
-export const HomeOption = styled(OptionDiv)`
-  background-color: #cdb5e1;
-  color: #ff0000;
-  text-decoration: none;
-`
+// export const HomeOption = styled(OptionDiv)`
+//   background-color: #cdb5e1;
+//   color: #ff0000;
+//   text-decoration: none;
+// `
 export const TrendingSectionHead = styled.div`
   display: flex;
   align-items: center;
@@ -63,12 +63,4 @@ export const Div1 = styled.div`
   justify-content: center;
   margin-right: 20px;
   font-size: 25px;
-`
-export const GamingSectionMainDiv = styled.ul`
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  width: 100%;
 `

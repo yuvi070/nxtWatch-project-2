@@ -9,7 +9,6 @@ import {SiYoutubegaming} from 'react-icons/si'
 import {MdPlaylistAdd} from 'react-icons/md'
 
 import Header from '../Header'
-import GamingList from '../GamingList'
 
 import {
   SocialMediaImage,
@@ -18,12 +17,10 @@ import {
   SideBarRoutes,
   SideBar,
   OptionDiv,
-  HomeOption,
   MainSection,
   Main,
   TrendingSectionHead,
   Div1,
-  GamingSectionMainDiv,
 } from './styled'
 
 const ApiConstants = {
@@ -33,32 +30,18 @@ const ApiConstants = {
   failure: 'FAILURE',
 }
 
-class Gaming extends Component {
+class VideoItem extends Component {
   state = {
-    gamesList: [],
     apiStatus: ApiConstants.initial,
   }
 
   componentDidMount() {
-    this.getGamingList()
+    this.getVideoItem()
   }
 
-  getGamingList = async () => {
-    this.setState({apiStatus: ApiConstants.progress})
-    const jwtToken = Cookies.get('jwt_token')
-    const apiUrl = 'https://apis.ccbp.in/videos/gaming'
-    const options = {
-      headers: {
-        Authorization: `bearer ${jwtToken}`,
-      },
-    }
-    const response = await fetch(apiUrl, options)
-    if (response.ok) {
-      const data = await response.json()
-      this.setState({gamesList: data.videos, apiStatus: ApiConstants.success})
-    } else {
-      console.log('Error')
-    }
+  getVideoItem = async () => {
+    const {prop} = this.props
+    console.log(prop)
   }
 
   showSideBar = () => (
@@ -78,10 +61,10 @@ class Gaming extends Component {
         </Link>
 
         <Link to="/gaming" className="link-text">
-          <HomeOption>
+          <OptionDiv>
             <SiYoutubegaming />
             <SideBarRoutes>Gaming</SideBarRoutes>
-          </HomeOption>
+          </OptionDiv>
         </Link>
         <Link to="/saved" className="link-text">
           <OptionDiv>
@@ -117,29 +100,8 @@ class Gaming extends Component {
     </div>
   )
 
-  showSuccess = () => {
-    const {gamesList} = this.state
-    gamesList.map(each => console.log(each))
-    return (
-      <>
-        <TrendingSectionHead>
-          <Div1>
-            <SiYoutubegaming />
-          </Div1>
-          <h1>Gaming</h1>
-        </TrendingSectionHead>
-        <GamingSectionMainDiv>
-          {gamesList.map(each => (
-            <GamingList key={each.id} each={each} />
-          ))}
-        </GamingSectionMainDiv>
-      </>
-    )
-  }
-
   renderAllView = () => {
     const {apiStatus} = this.state
-
     switch (apiStatus) {
       case 'PROGRESS':
         return this.showProgress()
@@ -163,4 +125,4 @@ class Gaming extends Component {
   }
 }
 
-export default Gaming
+export default VideoItem
