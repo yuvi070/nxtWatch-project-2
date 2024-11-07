@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const Main = styled.div`
   display: flex;
   width: 100%;
+  padding: 10px;
 `
 
 export const MainSection = styled.div`
@@ -63,4 +64,40 @@ export const Div1 = styled.div`
   justify-content: center;
   margin-right: 20px;
   font-size: 25px;
+`
+
+export const VideoPlayer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`
+export const VideoDiv1 = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+export const VideoDiv2 = styled.div`
+  display: flex;
+  align-items: center;
+  width: 20%;
+`
+
+export const VideoDiv3 = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 25%;
+  margin-right: 30px;
+`
+export const VideoDiv4 = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  background-color: transparent;
+  border: 0px;
+  color:${props => (props.like ? '#2563eb' : '#64748b')}
+  outline: none;
+  cursor: pointer;
 `
