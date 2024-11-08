@@ -5,6 +5,8 @@ const myContext = React.createContext({
   changeTheme: () => {},
   activeRoute: 'Home',
   changeRoute: () => {},
+  savedList: [],
+  updateSavedList: () => {},
 })
 
 export default myContext

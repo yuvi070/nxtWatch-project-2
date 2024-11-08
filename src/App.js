@@ -17,6 +17,7 @@ class App extends Component {
   state = {
     isDark: false,
     activeRoute: 'Home',
+    savedList: [],
   }
 
   changeTheme = () => {
@@ -27,8 +28,14 @@ class App extends Component {
     this.setState({activeRoute: id})
   }
 
+  updateSavedList = list => {
+    this.setState(prev => ({
+      savedList: [...prev.savedList, list],
+    }))
+  }
+
   render() {
-    const {isDark, activeRoute} = this.state
+    const {isDark, activeRoute, savedList} = this.state
     return (
       <Switch>
         <myContext.Provider
@@ -37,6 +44,8 @@ class App extends Component {
             changeTheme: this.changeTheme,
             changeRoute: this.changeRoute,
             activeRoute,
+            savedList,
+            updateSavedList: this.updateSavedList,
           }}
         >
           <Route exact path="/login" component={Login} />

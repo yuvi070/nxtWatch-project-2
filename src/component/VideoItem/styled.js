@@ -10,6 +10,7 @@ export const MainSection = styled.div`
   width: 80%;
   max-height: 90vh;
   overflow: auto;
+  padding-bottom: 25px;
 `
 
 export const SocialMediaImage = styled.img`
@@ -97,7 +98,26 @@ export const VideoDiv4 = styled.div`
   font-size: 18px;
   background-color: transparent;
   border: 0px;
-  color:${props => (props.like ? '#2563eb' : '#64748b')}
+  color: ${props => (props.value ? '#2563eb' : '#64748b')};
   outline: none;
   cursor: pointer;
+`
+export const ChannelDetails = styled.div`
+  display: flex;
+`
+export const ChannelLogo = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  margin-right: 15px;
+`
+export const ChannelInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  line-height: 0px;
+`
+
+export const ChannelDescription = styled.div`
+  margin-left: 25px;
+  font-size: 17px;
 `

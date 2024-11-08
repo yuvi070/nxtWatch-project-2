@@ -9,7 +9,7 @@ const VideoList = props => {
   const {channel, id, publishedAt, thumbnailUrl, title, viewCount} = each
   const formattedDate = formatDistanceToNowStrict(new Date(publishedAt))
   return (
-    <Link to="/" className="link-text">
+    <Link to={`/videos/${id}`} className="link-text">
       <VideoCard as="li">
         <ThumbnailImage src={thumbnailUrl} />
         <VideoDiv1>

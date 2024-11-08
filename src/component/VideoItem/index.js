@@ -10,9 +10,10 @@ import {FaFire} from 'react-icons/fa'
 import {SiYoutubegaming} from 'react-icons/si'
 import {MdPlaylistAdd} from 'react-icons/md'
 import {BsDot} from 'react-icons/bs'
-import {BiLike, BiDislike} from 'react-icons/bi'
+import {BiLike, BiDislike, BiSolidLike} from 'react-icons/bi'
 
 import Header from '../Header'
+import myContext from '../../context/myContext'
 import './index.css'
 
 import {
@@ -31,6 +32,10 @@ import {
   VideoDiv2,
   VideoDiv3,
   VideoDiv4,
+  ChannelDetails,
+  ChannelLogo,
+  ChannelInfo,
+  ChannelDescription,
 } from './styled'
 
 const ApiConstants = {
@@ -54,15 +59,18 @@ class VideoItem extends Component {
   }
 
   onClickLike = () => {
-    this.setState(prev => ({like: !prev.like, dislike: !prev.dislike}))
+    console.log('like clicked')
+    this.setState(prev => ({like: !prev.like, dislike: false}))
   }
 
   onClickDislike = () => {
-    this.setState(prev => ({dislike: !prev.dislike, like: !prev.like}))
+    console.log('dislike clicked')
+    this.setState(prev => ({dislike: !prev.dislike, like: false}))
   }
 
-  onClickLike = () => {
-    this.setState(prev => ({like: !prev.like}))
+  onClickSave = () => {
+    console.log('save clicked')
+    this.setState(prev => ({save: !prev.save}))
   }
 
   getVideoItem = async () => {
@@ -151,8 +159,6 @@ class VideoItem extends Component {
     const formattedDate = formatDistanceToNowStrict(
       new Date(VideoDetails.published_at),
     )
-    console.log(VideoDetails)
-    const showLike = like ? 'like' : ''
 
     return (
       <>
@@ -174,24 +180,45 @@ class VideoItem extends Component {
           </VideoDiv2>
           <VideoDiv3>
             <VideoDiv4
-              like
+              value={like}
               as="button"
               type="button"
               onClick={this.onClickLike}
             >
-              <BiLike />
+              {like ? <AiFillLike /> : <BiLike />}
               <p>Like</p>
             </VideoDiv4>
-            <VideoDiv4 as="button" type="button" onClick={this.onClickDislike}>
-              <BiDislike />
+            <VideoDiv4
+              value={dislike}
+              as="button"
+              type="button"
+              onClick={this.onClickDislike}
+            >
+              {dislike ? <AiFillDislike /> : <BiDislike />}
               <p>Dislike</p>
             </VideoDiv4>
-            <VideoDiv4 as="button" type="button" onClick={this.onClickSave}>
+            <VideoDiv4
+              value={save}
+              as="button"
+              type="button"
+              onClick={this.onClickSave}
+            >
               <MdPlaylistAdd />
               <p>Save</p>
             </VideoDiv4>
           </VideoDiv3>
         </VideoDiv1>
+        <hr />
+        <ChannelDetails>
+          <ChannelLogo src={VideoDetails.channel.profile_image_url} alt="" />
+          <ChannelInfo>
+            <h5>{VideoDetails.channel.name}</h5>
+            <p>{`${VideoDetails.channel.subscriber_count} subscribers`}</p>
+          </ChannelInfo>
+        </ChannelDetails>
+        <ChannelDescription>
+          <p>{VideoDetails.description}</p>
+        </ChannelDescription>
       </>
     )
   }
