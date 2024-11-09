@@ -130,8 +130,6 @@ class Trending extends Component {
 
   showSuccess = () => {
     const {trendingVideosList} = this.state
-    console.log(trendingVideosList)
-    trendingVideosList.map(each => console.log(each.title))
     return (
       <MainSection>
         <TrendingSectionHead>
@@ -150,7 +148,6 @@ class Trending extends Component {
             <li>{each.title}</li>
           ))}
         </ul> */}
-        {console.log(trendingVideosList.map(each => each.title))}
       </MainSection>
     )
   }

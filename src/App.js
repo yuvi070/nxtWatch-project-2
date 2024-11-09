@@ -29,9 +29,13 @@ class App extends Component {
   }
 
   updateSavedList = list => {
-    this.setState(prev => ({
-      savedList: [...prev.savedList, list],
-    }))
+    const {savedList} = this.state
+    const isExist = savedList.find(each => each.id === list.id)
+    if (isExist === undefined) {
+      this.setState(prev => ({
+        savedList: [...prev.savedList, list],
+      }))
+    }
   }
 
   render() {

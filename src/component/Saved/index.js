@@ -8,6 +8,7 @@ import {MdPlaylistAdd} from 'react-icons/md'
 
 import Header from '../Header'
 import VideoList from '../VideosList'
+import myContext from '../../context/myContext'
 
 import {
   SocialMediaImage,
@@ -78,28 +79,27 @@ class Saved extends Component {
 
   showSuccess = () => {
     const {trendingVideosList} = this.state
-    console.log(trendingVideosList)
-    trendingVideosList.map(each => console.log(each.title))
     return (
-      <MainSection>
-        <TrendingSectionHead>
-          <Div1>
-            <FaFire />
-          </Div1>
-          <h1>Trending</h1>
-        </TrendingSectionHead>
-        <TrendingUlContainer>
-          {trendingVideosList.map(each => (
-            <VideoList each={each} key={each.id} />
-          ))}
-        </TrendingUlContainer>
-        {/* <ul>
-          {trendingVideosList.map(each => (
-            <li>{each.title}</li>
-          ))}
-        </ul> */}
-        {console.log(trendingVideosList.map(each => each.title))}
-      </MainSection>
+      <myContext.Consumer>
+        {value => {
+          const {savedList} = value
+          return (
+            <MainSection>
+              <TrendingSectionHead>
+                <Div1>
+                  <MdPlaylistAdd />
+                </Div1>
+                <h1>Saved</h1>
+              </TrendingSectionHead>
+              <TrendingUlContainer>
+                {savedList.map(each => (
+                  <VideoList each={each} key={each.id} />
+                ))}
+              </TrendingUlContainer>
+            </MainSection>
+          )
+        }}
+      </myContext.Consumer>
     )
   }
 
@@ -171,9 +171,7 @@ class Saved extends Component {
         <Header />
         <Main>
           {this.showSideBar()}
-          <MainSection>
-            <h1>This is Saved Video Section</h1>
-          </MainSection>
+          <MainSection>{this.showSuccess()}</MainSection>
         </Main>
       </>
     )

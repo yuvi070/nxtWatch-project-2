@@ -6,7 +6,7 @@ export const Main = styled.div`
 `
 
 export const MainSection = styled.div`
-  width: 80%;
+  width: 100%;
   max-height: 90vh;
   overflow: auto;
 `

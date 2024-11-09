@@ -69,7 +69,6 @@ class VideoItem extends Component {
   }
 
   onClickSave = () => {
-    console.log('save clicked')
     this.setState(prev => ({save: !prev.save}))
   }
 
@@ -161,65 +160,86 @@ class VideoItem extends Component {
     )
 
     return (
-      <>
-        <VideoPlayer>
-          <ReactPlayer
-            url={VideoDetails.video_url}
-            width="800px"
-            height="420px"
-            className="video-player"
-            controls="true"
-          />
-        </VideoPlayer>
-        <h3>{VideoDetails.title}</h3>
-        <VideoDiv1>
-          <VideoDiv2>
-            <p>{VideoDetails.view_count} views</p>
-            <BsDot />
-            <p>{`${formattedDate} ago`}</p>
-          </VideoDiv2>
-          <VideoDiv3>
-            <VideoDiv4
-              value={like}
-              as="button"
-              type="button"
-              onClick={this.onClickLike}
-            >
-              {like ? <AiFillLike /> : <BiLike />}
-              <p>Like</p>
-            </VideoDiv4>
-            <VideoDiv4
-              value={dislike}
-              as="button"
-              type="button"
-              onClick={this.onClickDislike}
-            >
-              {dislike ? <AiFillDislike /> : <BiDislike />}
-              <p>Dislike</p>
-            </VideoDiv4>
-            <VideoDiv4
-              value={save}
-              as="button"
-              type="button"
-              onClick={this.onClickSave}
-            >
-              <MdPlaylistAdd />
-              <p>Save</p>
-            </VideoDiv4>
-          </VideoDiv3>
-        </VideoDiv1>
-        <hr />
-        <ChannelDetails>
-          <ChannelLogo src={VideoDetails.channel.profile_image_url} alt="" />
-          <ChannelInfo>
-            <h5>{VideoDetails.channel.name}</h5>
-            <p>{`${VideoDetails.channel.subscriber_count} subscribers`}</p>
-          </ChannelInfo>
-        </ChannelDetails>
-        <ChannelDescription>
-          <p>{VideoDetails.description}</p>
-        </ChannelDescription>
-      </>
+      <myContext.Consumer>
+        {value => {
+          const {updateSavedList} = value
+          const onClickSaveIcon = () => {
+            const formattedData = {
+              id: VideoDetails.id,
+              channel: VideoDetails.channel,
+              publishedAt: VideoDetails.published_at,
+              thumbnailUrl: VideoDetails.thumbnail_url,
+              title: VideoDetails.title,
+              viewCount: VideoDetails.view_count,
+            }
+            updateSavedList(formattedData)
+          }
+          return (
+            <>
+              <VideoPlayer>
+                <ReactPlayer
+                  url={VideoDetails.video_url}
+                  width="800px"
+                  height="420px"
+                  className="video-player"
+                  controls="true"
+                />
+              </VideoPlayer>
+              <h3>{VideoDetails.title}</h3>
+              <VideoDiv1>
+                <VideoDiv2>
+                  <p>{VideoDetails.view_count} views</p>
+                  <BsDot />
+                  <p>{`${formattedDate} ago`}</p>
+                </VideoDiv2>
+                <VideoDiv3>
+                  <VideoDiv4
+                    value={like}
+                    as="button"
+                    type="button"
+                    onClick={this.onClickLike}
+                  >
+                    {like ? <AiFillLike /> : <BiLike />}
+                    <p>Like</p>
+                  </VideoDiv4>
+                  <VideoDiv4
+                    value={dislike}
+                    as="button"
+                    type="button"
+                    onClick={this.onClickDislike}
+                  >
+                    {dislike ? <AiFillDislike /> : <BiDislike />}
+                    <p>Dislike</p>
+                  </VideoDiv4>
+                  <VideoDiv4
+                    value={save}
+                    as="button"
+                    type="button"
+                    onClick={onClickSaveIcon}
+                  >
+                    <MdPlaylistAdd />
+                    <p>Save</p>
+                  </VideoDiv4>
+                </VideoDiv3>
+              </VideoDiv1>
+              <hr />
+              <ChannelDetails>
+                <ChannelLogo
+                  src={VideoDetails.channel.profile_image_url}
+                  alt=""
+                />
+                <ChannelInfo>
+                  <h5>{VideoDetails.channel.name}</h5>
+                  <p>{`${VideoDetails.channel.subscriber_count} subscribers`}</p>
+                </ChannelInfo>
+              </ChannelDetails>
+              <ChannelDescription>
+                <p>{VideoDetails.description}</p>
+              </ChannelDescription>
+            </>
+          )
+        }}
+      </myContext.Consumer>
     )
   }
 
