@@ -57,7 +57,7 @@ class Gaming extends Component {
       const data = await response.json()
       this.setState({gamesList: data.videos, apiStatus: ApiConstants.success})
     } else {
-      console.log('Error')
+      this.setState({apiStatus: ApiConstants.failure})
     }
   }
 
@@ -137,6 +137,25 @@ class Gaming extends Component {
     )
   }
 
+  showFailureView = () => (
+    <div className="failure-div">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+        alt=""
+        className="failure-image"
+      />
+      <h3>Oops! Something Went Wrong</h3>
+      <p>
+        We are having some trouble completing your request.
+        <br />
+        Please try again.
+      </p>
+      <button type="button" onClick={this.getGamingList}>
+        Retry
+      </button>
+    </div>
+  )
+
   renderAllView = () => {
     const {apiStatus} = this.state
 
@@ -145,6 +164,8 @@ class Gaming extends Component {
         return this.showProgress()
       case 'SUCCESS':
         return this.showSuccess()
+      case 'FAILURE':
+        return this.showFailureView()
       default:
         return null
     }

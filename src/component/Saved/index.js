@@ -85,23 +85,56 @@ class Saved extends Component {
           const {savedList} = value
           return (
             <MainSection>
-              <TrendingSectionHead>
-                <Div1>
-                  <MdPlaylistAdd />
-                </Div1>
-                <h1>Saved</h1>
-              </TrendingSectionHead>
-              <TrendingUlContainer>
-                {savedList.map(each => (
-                  <VideoList each={each} key={each.id} />
-                ))}
-              </TrendingUlContainer>
+              {savedList.length === 0 ? (
+                <div className="failure-div">
+                  <img
+                    src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png"
+                    alt="no saved videos"
+                    className="failure-image"
+                  />
+                  <h3>No Saved Videos Found</h3>
+                  <p>You can save your videos while watching them.</p>
+                </div>
+              ) : (
+                <>
+                  <TrendingSectionHead>
+                    <Div1>
+                      <MdPlaylistAdd />
+                    </Div1>
+                    <h1>Saved</h1>
+                  </TrendingSectionHead>
+                  <TrendingUlContainer>
+                    {savedList.map(each => (
+                      <VideoList each={each} key={each.id} />
+                    ))}
+                  </TrendingUlContainer>
+                </>
+              )}
             </MainSection>
           )
         }}
       </myContext.Consumer>
     )
   }
+
+  showFailureView = () => (
+    <div className="failure-div">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png"
+        alt="no saved videos"
+        className="failure-image"
+      />
+      <h3>Oops! Something Went Wrong</h3>
+      <p>
+        We are having some trouble completing your request.
+        <br />
+        Please try again.
+      </p>
+      <button type="button" onClick={this.getGamingList}>
+        Retry
+      </button>
+    </div>
+  )
 
   renderView = () => {
     const {apiStatus} = this.state

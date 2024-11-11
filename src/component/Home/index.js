@@ -58,8 +58,9 @@ class Home extends Component {
 
   getAllVideos = async () => {
     this.setState({apiStatus: ApiConstants.progress})
+    const {searchInput} = this.state
     const getCookies = Cookies.get('jwt_token')
-    const apiUrl = `https://apis.ccbp.in/videos/all?search=`
+    const apiUrl = `https://apis.ccbp.in/videos/all?search=${searchInput}`
     const options = {
       headers: {
         Authorization: `bearer ${getCookies}`,
@@ -77,7 +78,11 @@ class Home extends Component {
         viewCount: each.view_count,
         publishedAt: each.published_at,
       }))
-      this.setState({allVideoList: updateData, apiStatus: ApiConstants.success})
+      this.setState({
+        allVideoList: updateData,
+        apiStatus: ApiConstants.success,
+        searchInput: '',
+      })
     } else {
       this.setState({apiStatus: ApiConstants.failure})
     }
@@ -98,12 +103,28 @@ class Home extends Component {
     //   return lowerTitle.includes(lowerInput)
     // })
     // this.setState({allVideoList: filteredArray})
-    this.onChangeSearchInput()
+    this.getAllVideos()
   }
 
   onChangeSearchInput = event => {
     this.setState({searchInput: event.target.value})
   }
+
+  noVideosView = () => (
+    <div className="failure-div">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
+        alt="no videos"
+        className="failure-image"
+      />
+      <p>No Search Result Found</p>
+      <p>
+        Try different keywords or remove search filters.
+        <br />
+        Please try again.
+      </p>
+    </div>
+  )
 
   showBottomSection = () => {
     const {allVideoList, searchInput} = this.state
@@ -112,6 +133,7 @@ class Home extends Component {
       const lowerInput = searchInput.toLowerCase()
       return lowerTitle.includes(lowerInput)
     })
+    console.log(allVideoList.length)
     return (
       <>
         <SearchBoxDiv as="form" onSubmit={this.onSubmitSearchInputs}>
@@ -120,15 +142,24 @@ class Home extends Component {
             type="text"
             placeholder="Search"
           />
-          <SearchInputButton type="submit" disabled>
+          <SearchInputButton type="submit">
             <IoIosSearch />
           </SearchInputButton>
         </SearchBoxDiv>
-        <VideosUlContainer>
+        {/* <VideosUlContainer>
           {searchResult.map(each => (
             <RenderVideoList videoList={each} key={each.id} />
           ))}
-        </VideosUlContainer>
+        </VideosUlContainer> */}
+        {allVideoList.length === 0 ? (
+          this.noVideosView()
+        ) : (
+          <VideosUlContainer>
+            {searchResult.map(each => (
+              <RenderVideoList videoList={each} key={each.id} />
+            ))}
+          </VideosUlContainer>
+        )}
       </>
     )
   }
@@ -139,6 +170,25 @@ class Home extends Component {
     </div>
   )
 
+  showFailureView = () => (
+    <div className="failure-div">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+        alt=""
+        className="failure-image"
+      />
+      <h3>Oops! Something Went Wrong</h3>
+      <p>
+        We are having some trouble completing your request.
+        <br />
+        Please try again.
+      </p>
+      <button type="button" onClick={this.getAllVideos}>
+        Retry
+      </button>
+    </div>
+  )
+
   renderAllViews = () => {
     const {apiStatus} = this.state
     switch (apiStatus) {
@@ -146,6 +196,8 @@ class Home extends Component {
         return this.showRenderingView()
       case 'SUCCESS':
         return this.showBottomSection()
+      case 'FAILURE':
+        return this.showFailureView()
       default:
         return null
     }

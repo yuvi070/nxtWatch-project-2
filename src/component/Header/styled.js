@@ -26,3 +26,22 @@ export const AccountSection = styled.div`
   width: 20%;
   justify-content: space-around;
 `
+export const PopupDiv = styled.div`
+  padding: 15px;
+  border-radius: 9px;
+  width: 100%;
+  height: 100px;
+  background-color: yellowgreen;
+`
+export const PopupButtonDiv = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+`
+export const PopupButton = styled.button`
+  background-color:{props ()= > 
+    props.outline?'transparent': 'blue';
+  }
+  cursor:pointer;
+
+`

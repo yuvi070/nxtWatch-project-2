@@ -8,3 +8,14 @@
   justify-content: center;
   align-items: center;
 }
+.failure-div {
+  display: flex;
+  height: 57vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.failure-image {
+  width: 15%;
+}

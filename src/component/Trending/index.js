@@ -152,6 +152,25 @@ class Trending extends Component {
     )
   }
 
+  showFailureView = () => (
+    <div className="failure-div">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+        alt=""
+        className="failure-image"
+      />
+      <h3>Oops! Something Went Wrong</h3>
+      <p>
+        We are having some trouble completing your request.
+        <br />
+        Please try again.
+      </p>
+      <button type="button" onClick={this.getTrendingVideos}>
+        Retry
+      </button>
+    </div>
+  )
+
   renderView = () => {
     const {apiStatus} = this.state
     switch (apiStatus) {
@@ -159,6 +178,8 @@ class Trending extends Component {
         return this.showProgress()
       case 'SUCCESS':
         return this.showSuccess()
+      case 'FAILURE':
+        return this.showFailureView()
       default:
         return null
     }

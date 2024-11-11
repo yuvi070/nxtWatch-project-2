@@ -1,3 +1,4 @@
+import Popup from 'reactjs-popup'
 import Cookies from 'js-cookie'
 import {withRouter} from 'react-router-dom'
 
@@ -7,6 +8,9 @@ import {
   HeaderHome,
   AccountImage,
   HeaderLogo,
+  PopupDiv,
+  PopupButtonDiv,
+  PopupButton,
 } from './styled'
 
 const Header = props => {
@@ -29,9 +33,19 @@ const Header = props => {
             src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png"
             alt="profile"
           />
-          <button type="button" onClick={onClickLogout}>
-            Logout
-          </button>
+          <Popup modal trigger={<button type="button">Logout</button>}>
+            {close => (
+              <PopupDiv>
+                <p>Are you sure you want to logout ?</p>
+                <PopupButtonDiv>
+                  <PopupButton outline onClick={() => close()}>
+                    Cancel
+                  </PopupButton>
+                  <PopupButton onClick={onClickLogout}>Confirm</PopupButton>
+                </PopupButtonDiv>
+              </PopupDiv>
+            )}
+          </Popup>
         </AccountSection>
       </HeaderDiv>
     </HeaderHome>

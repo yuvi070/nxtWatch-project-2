@@ -112,7 +112,7 @@ class Login extends Component {
               Login
             </LoginButton>
           </form>
-          {showError && <ErrorMsg>{errorMsg}</ErrorMsg>}
+          {showError && <ErrorMsg>{`*${errorMsg}`}</ErrorMsg>}
         </Body>
       </Home>
     )
