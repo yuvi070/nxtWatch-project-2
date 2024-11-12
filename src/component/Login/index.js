@@ -14,6 +14,8 @@ import {
   ErrorMsg,
 } from './styled'
 
+import myContext from '../../context/myContext'
+
 class Login extends Component {
   state = {
     username: '',
@@ -72,49 +74,56 @@ class Login extends Component {
     }
     const {username, password, showPassword, showError, errorMsg} = this.state
     return (
-      <Home>
-        <Body>
-          <LoginLogoImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-            alt=""
-          />
-          <form onSubmit={this.onSubmitForm}>
-            <InputBox>
-              <LabelText htmlFor="username">USERNAME</LabelText>
-              <Input
-                type="text"
-                placeholder="Username"
-                value={username}
-                id="username"
-                onChange={this.onChangeUsername}
-              />
-            </InputBox>
-            <InputBox>
-              <LabelText htmlFor="password">PASSWORD</LabelText>
-              <Input
-                value={password}
-                placeholder="Password"
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                onChange={this.onChangePassword}
-              />
-            </InputBox>
+      <myContext.Consumer>
+        {value => {
+          const {idDark, changeTheme} = value
+          return (
+            <Home>
+              <Body>
+                <LoginLogoImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+                  alt=""
+                />
+                <form onSubmit={this.onSubmitForm}>
+                  <InputBox>
+                    <LabelText htmlFor="username">USERNAME</LabelText>
+                    <Input
+                      type="text"
+                      placeholder="Username"
+                      value={username}
+                      id="username"
+                      onChange={this.onChangeUsername}
+                    />
+                  </InputBox>
+                  <InputBox>
+                    <LabelText htmlFor="password">PASSWORD</LabelText>
+                    <Input
+                      value={password}
+                      placeholder="Password"
+                      type={showPassword ? 'text' : 'password'}
+                      id="password"
+                      onChange={this.onChangePassword}
+                    />
+                  </InputBox>
 
-            <CheckboxInputBox>
-              <CheckboxInput
-                onClick={this.onClickShowPassword}
-                type="checkbox"
-                id="checkbox"
-              />
-              <label htmlFor="checkbox">Show Password</label>
-            </CheckboxInputBox>
-            <LoginButton type="submit" onClick={this.onSubmitForm}>
-              Login
-            </LoginButton>
-          </form>
-          {showError && <ErrorMsg>{`*${errorMsg}`}</ErrorMsg>}
-        </Body>
-      </Home>
+                  <CheckboxInputBox>
+                    <CheckboxInput
+                      onClick={this.onClickShowPassword}
+                      type="checkbox"
+                      id="checkbox"
+                    />
+                    <label htmlFor="checkbox">Show Password</label>
+                  </CheckboxInputBox>
+                  <LoginButton type="submit" onClick={this.onSubmitForm}>
+                    Login
+                  </LoginButton>
+                </form>
+                {showError && <ErrorMsg>{`*${errorMsg}`}</ErrorMsg>}
+              </Body>
+            </Home>
+          )
+        }}
+      </myContext.Consumer>
     )
   }
 }

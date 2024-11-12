@@ -88,7 +88,7 @@ class VideoItem extends Component {
     if (response.ok) {
       const data = await response.json()
       this.setState({
-        apiStatus: ApiConstants.failure,
+        apiStatus: ApiConstants.success,
         VideoDetails: data.video_details,
       })
     } else {
@@ -157,6 +157,7 @@ class VideoItem extends Component {
     const formattedDate = formatDistanceToNowStrict(
       new Date(VideoDetails.published_at),
     )
+    const showSaveText = save ? 'Saved' : 'Save'
 
     return (
       <myContext.Consumer>
@@ -171,6 +172,7 @@ class VideoItem extends Component {
               title: VideoDetails.title,
               viewCount: VideoDetails.view_count,
             }
+            this.onClickSave()
             updateSavedList(formattedData)
           }
           return (
@@ -217,7 +219,7 @@ class VideoItem extends Component {
                     onClick={onClickSaveIcon}
                   >
                     <MdPlaylistAdd />
-                    <p>Save</p>
+                    <p>{showSaveText}</p>
                   </VideoDiv4>
                 </VideoDiv3>
               </VideoDiv1>

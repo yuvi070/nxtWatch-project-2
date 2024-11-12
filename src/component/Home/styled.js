@@ -3,11 +3,14 @@ import styled from 'styled-components'
 export const Main = styled.div`
   display: flex;
   width: 100%;
+  padding: 10px;
+  background-color: ${props => (props.show ? '#181818' : 'white')};
 `
 
 export const MainSection = styled.div`
   width: 80%;
   max-height: 90vh;
+  padding: 10px;
   overflow: auto;
 `
 export const Advertisement = styled.div`
@@ -16,6 +19,7 @@ export const Advertisement = styled.div`
   background-size: cover;
   padding-right: 25px;
   margin-bottom: 10px;
+  padding: 15px;
 `
 
 export const AdDiv1 = styled.div`
@@ -53,11 +57,16 @@ export const SearchInput = styled.input`
   height: 30px;
   outline: none;
   padding-left: 12px;
+  border: 1px solid;
+  border-color: ${props => (props.show ? '#909090' : '#383838')};
+  background-color: ${props => (props.show ? '#181818' : 'white')};
 `
 export const SearchInputButton = styled.button`
   width: 12%;
   cursor: pointer;
   outline: none;
+  color: ${props => (props.show ? '#909090' : '#383838')};
+  background-color: ${props => (props.show ? '#424242' : 'white')};
 `
 
 // SideBar Styling
@@ -86,6 +95,7 @@ export const SideBar = styled.div`
   justify-content: space-between;
   padding-bottom: 15px;
   padding-right: 25px;
+  background-color: ${props => (props.show ? '#212121' : 'white')};
 `
 export const OptionDiv = styled.div`
   display: flex;
@@ -95,7 +105,10 @@ export const OptionDiv = styled.div`
   padding-left: 25px;
 `
 export const HomeOption = styled(OptionDiv)`
-  background-color: #cdb5e1;
+  background-color: ${props => (props.show ? '#383838' : 'yellowgreen')};
   color: #ff0000;
   text-decoration: none;
+`
+export const HeaderDiv = styled.div`
+  background-color: ${props => (props.show ? '#212121' : 'white')};
 `

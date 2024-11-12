@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const ListCard = styled.li`
   width: 30%;
-  background-color: white;
+  background-color: ${props => (props.show ? '#181818' : 'white')};
   height: 370px;
   margin-bottom: 30px;
   color: black;
@@ -21,6 +21,7 @@ export const ChannelLogo = styled.img`
 `
 export const VideoDetailsDiv1 = styled.div`
   line-height: 20px;
+  color: ${props => (props.show ? 'white' : '#181818')};
 `
 export const VideoDetailsDiv2 = styled.div`
   display: flex;

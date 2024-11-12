@@ -14,6 +14,7 @@ import {MdPlaylistAdd} from 'react-icons/md'
 import Header from '../Header'
 import SideBarComponent from '../SideBar'
 import RenderVideoList from '../RenderVideoList'
+import myContext from '../../context/myContext'
 import './index.css'
 
 import {
@@ -34,6 +35,7 @@ import {
   SideBar,
   OptionDiv,
   HomeOption,
+  HeaderDiv,
 } from './styled'
 
 const ApiConstants = {
@@ -133,34 +135,36 @@ class Home extends Component {
       const lowerInput = searchInput.toLowerCase()
       return lowerTitle.includes(lowerInput)
     })
-    console.log(allVideoList.length)
     return (
-      <>
-        <SearchBoxDiv as="form" onSubmit={this.onSubmitSearchInputs}>
-          <SearchInput
-            onChange={this.onChangeSearchInput}
-            type="text"
-            placeholder="Search"
-          />
-          <SearchInputButton type="submit">
-            <IoIosSearch />
-          </SearchInputButton>
-        </SearchBoxDiv>
-        {/* <VideosUlContainer>
-          {searchResult.map(each => (
-            <RenderVideoList videoList={each} key={each.id} />
-          ))}
-        </VideosUlContainer> */}
-        {allVideoList.length === 0 ? (
-          this.noVideosView()
-        ) : (
-          <VideosUlContainer>
-            {searchResult.map(each => (
-              <RenderVideoList videoList={each} key={each.id} />
-            ))}
-          </VideosUlContainer>
-        )}
-      </>
+      <myContext.Consumer>
+        {value => {
+          const {isDark} = value
+          return (
+            <>
+              <SearchBoxDiv as="form" onSubmit={this.onSubmitSearchInputs}>
+                <SearchInput
+                  onChange={this.onChangeSearchInput}
+                  type="text"
+                  placeholder="Search"
+                  show={isDark}
+                />
+                <SearchInputButton show={isDark} type="submit">
+                  <IoIosSearch />
+                </SearchInputButton>
+              </SearchBoxDiv>
+              {allVideoList.length === 0 ? (
+                this.noVideosView()
+              ) : (
+                <VideosUlContainer>
+                  {searchResult.map(each => (
+                    <RenderVideoList videoList={each} key={each.id} />
+                  ))}
+                </VideosUlContainer>
+              )}
+            </>
+          )
+        }}
+      </myContext.Consumer>
     )
   }
 
@@ -204,84 +208,102 @@ class Home extends Component {
   }
 
   showSideBar = () => (
-    <SideBar>
-      <SideBarDiv1>
-        <Link to="/" className="link-text">
-          <HomeOption>
-            <AiFillHome />
-            <SideBarRoutes>Home</SideBarRoutes>
-          </HomeOption>
-        </Link>
-        <Link to="/trending" className="link-text">
-          <OptionDiv>
-            <FaFire />
-            <SideBarRoutes>Trending</SideBarRoutes>
-          </OptionDiv>
-        </Link>
+    <myContext.Consumer>
+      {value => {
+        const {isDark} = value
+        return (
+          <SideBar show={isDark}>
+            <SideBarDiv1>
+              <Link to="/" className="link-text">
+                <HomeOption show={isDark}>
+                  <AiFillHome />
+                  <SideBarRoutes>Home</SideBarRoutes>
+                </HomeOption>
+              </Link>
+              <Link to="/trending" className="link-text">
+                <OptionDiv>
+                  <FaFire />
+                  <SideBarRoutes>Trending</SideBarRoutes>
+                </OptionDiv>
+              </Link>
 
-        <Link to="/gaming" className="link-text">
-          <OptionDiv>
-            <SiYoutubegaming />
-            <SideBarRoutes>Gaming</SideBarRoutes>
-          </OptionDiv>
-        </Link>
-        <Link to="/saved" className="link-text">
-          <OptionDiv>
-            <MdPlaylistAdd />
-            <SideBarRoutes>Saved Videos</SideBarRoutes>
-          </OptionDiv>
-        </Link>
-      </SideBarDiv1>
-      <div>
-        <h3>Contact Us</h3>
-        <SocialMediaDiv>
-          <SocialMediaImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
-            alt="facebook logo"
-          />
-          <SocialMediaImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
-            alt="twitter logo"
-          />
-          <SocialMediaImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-            alt="linkedin logo"
-          />
-        </SocialMediaDiv>
-        <p>Enjoy! Now you can see your recommendations</p>
-      </div>
-    </SideBar>
+              <Link to="/gaming" className="link-text">
+                <OptionDiv>
+                  <SiYoutubegaming />
+                  <SideBarRoutes>Gaming</SideBarRoutes>
+                </OptionDiv>
+              </Link>
+              <Link to="/saved" className="link-text">
+                <OptionDiv>
+                  <MdPlaylistAdd />
+                  <SideBarRoutes>Saved Videos</SideBarRoutes>
+                </OptionDiv>
+              </Link>
+            </SideBarDiv1>
+            <div>
+              <h3>Contact Us</h3>
+              <SocialMediaDiv>
+                <SocialMediaImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
+                  alt="facebook logo"
+                />
+                <SocialMediaImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
+                  alt="twitter logo"
+                />
+                <SocialMediaImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
+                  alt="linkedin logo"
+                />
+              </SocialMediaDiv>
+              <p>Enjoy! Now you can see your recommendations</p>
+            </div>
+          </SideBar>
+        )
+      }}
+    </myContext.Consumer>
   )
 
   render() {
     const {showAd} = this.state
     return (
-      <>
-        <Header />
-        <Main>
-          {/* <SideBarComponent /> */}
-          {this.showSideBar()}
-          <MainSection>
-            {showAd && (
-              <Advertisement>
-                <AdDiv1>
-                  <AdImage
-                    src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-                    alt=""
-                  />
-                  <IoCloseOutline onClick={this.AdvertisementBanner} />
-                </AdDiv1>
-                <h3>
-                  Buy NxtWatch Premium prepaid plans with <br /> UPI
-                </h3>
-                <MemberShipButton type="button">GET IT NOW</MemberShipButton>
-              </Advertisement>
-            )}
-            {/* Main Section Starts */}
-            {this.renderAllViews()}
-          </MainSection>
-        </Main>
-      </>
+      <myContext.Consumer>
+        {value => {
+          const {isDark} = value
+          return (
+            <>
+              <HeaderDiv show={isDark}>
+                <Header />
+              </HeaderDiv>
+              <Main show={isDark}>
+                {/* <SideBarComponent /> */}
+                {this.showSideBar()}
+                <MainSection>
+                  {showAd && (
+                    <Advertisement>
+                      <AdDiv1>
+                        <AdImage
+                          src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+                          alt=""
+                        />
+                        <IoCloseOutline onClick={this.AdvertisementBanner} />
+                      </AdDiv1>
+                      <h3>
+                        Buy NxtWatch Premium prepaid plans with <br /> UPI
+                      </h3>
+                      <MemberShipButton type="button">
+                        GET IT NOW
+                      </MemberShipButton>
+                    </Advertisement>
+                  )}
+                  {/* Main Section Starts */}
+                  {this.renderAllViews()}
+                </MainSection>
+              </Main>
+            </>
+          )
+        }}
+      </myContext.Consumer>
     )
   }
 }

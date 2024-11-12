@@ -42,17 +42,17 @@ class App extends Component {
   render() {
     const {isDark, activeRoute, savedList} = this.state
     return (
-      <Switch>
-        <myContext.Provider
-          value={{
-            isDark,
-            changeTheme: this.changeTheme,
-            changeRoute: this.changeRoute,
-            activeRoute,
-            savedList,
-            updateSavedList: this.updateSavedList,
-          }}
-        >
+      <myContext.Provider
+        value={{
+          isDark,
+          changeTheme: this.changeTheme,
+          changeRoute: this.changeRoute,
+          activeRoute,
+          savedList,
+          updateSavedList: this.updateSavedList,
+        }}
+      >
+        <Switch>
           <Route exact path="/login" component={Login} />
           <ProtectedRoute exact path="/" component={Home} />
           <ProtectedRoute exact path="/trending" component={Trending} />
@@ -60,8 +60,8 @@ class App extends Component {
           <ProtectedRoute exact path="/saved" component={Saved} />
           <ProtectedRoute exact path="/videos/:id" component={VideoItem} />
           <Route component={NotFound} />
-        </myContext.Provider>
-      </Switch>
+        </Switch>
+      </myContext.Provider>
     )
   }
 }
