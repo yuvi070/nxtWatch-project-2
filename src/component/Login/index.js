@@ -76,28 +76,34 @@ class Login extends Component {
     return (
       <myContext.Consumer>
         {value => {
-          const {idDark, changeTheme} = value
+          const {isDark} = value
+          const showLogo = isDark
+            ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
+            : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
           return (
-            <Home>
-              <Body>
-                <LoginLogoImage
-                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-                  alt=""
-                />
+            <Home show={isDark}>
+              <Body show={isDark}>
+                <LoginLogoImage src={showLogo} alt="" />
                 <form onSubmit={this.onSubmitForm}>
-                  <InputBox>
-                    <LabelText htmlFor="username">USERNAME</LabelText>
+                  <InputBox show={isDark}>
+                    <LabelText show={isDark} htmlFor="username">
+                      USERNAME
+                    </LabelText>
                     <Input
                       type="text"
                       placeholder="Username"
                       value={username}
                       id="username"
                       onChange={this.onChangeUsername}
+                      show={isDark}
                     />
                   </InputBox>
-                  <InputBox>
-                    <LabelText htmlFor="password">PASSWORD</LabelText>
+                  <InputBox show={isDark}>
+                    <LabelText show={isDark} htmlFor="password">
+                      PASSWORD
+                    </LabelText>
                     <Input
+                      show={isDark}
                       value={password}
                       placeholder="Password"
                       type={showPassword ? 'text' : 'password'}
@@ -105,14 +111,15 @@ class Login extends Component {
                       onChange={this.onChangePassword}
                     />
                   </InputBox>
-
                   <CheckboxInputBox>
                     <CheckboxInput
                       onClick={this.onClickShowPassword}
                       type="checkbox"
                       id="checkbox"
                     />
-                    <label htmlFor="checkbox">Show Password</label>
+                    <LabelText show={isDark} htmlFor="checkbox">
+                      Show Password
+                    </LabelText>
                   </CheckboxInputBox>
                   <LoginButton type="submit" onClick={this.onSubmitForm}>
                     Login

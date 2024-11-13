@@ -24,7 +24,9 @@ import {
   TrendingSectionHead,
   Div1,
   TrendingUlContainer,
+  HeaderDiv,
 } from './styled'
+import myContext from '../../context/myContext'
 
 const ApiConstants = {
   initial: 'INITIAL',
@@ -73,53 +75,60 @@ class Trending extends Component {
   }
 
   showSideBar = () => (
-    <SideBar>
-      <SideBarDiv1>
-        <Link to="/" className="link-text">
-          <OptionDiv>
-            <AiFillHome />
-            <SideBarRoutes>Home</SideBarRoutes>
-          </OptionDiv>
-        </Link>
-        <Link to="/trending" className="link-text">
-          <HomeOption>
-            <FaFire />
-            <SideBarRoutes>Trending</SideBarRoutes>
-          </HomeOption>
-        </Link>
+    <myContext.Consumer>
+      {value => {
+        const {isDark} = value
+        return (
+          <SideBar show={isDark}>
+            <SideBarDiv1>
+              <Link to="/" className="link-text">
+                <OptionDiv>
+                  <AiFillHome />
+                  <SideBarRoutes>Home</SideBarRoutes>
+                </OptionDiv>
+              </Link>
+              <Link to="/trending" className="link-text">
+                <HomeOption show={isDark}>
+                  <FaFire />
+                  <SideBarRoutes>Trending</SideBarRoutes>
+                </HomeOption>
+              </Link>
 
-        <Link to="/gaming" className="link-text">
-          <OptionDiv>
-            <SiYoutubegaming />
-            <SideBarRoutes>Gaming</SideBarRoutes>
-          </OptionDiv>
-        </Link>
-        <Link to="/saved" className="link-text">
-          <OptionDiv>
-            <MdPlaylistAdd />
-            <SideBarRoutes>Saved Videos</SideBarRoutes>
-          </OptionDiv>
-        </Link>
-      </SideBarDiv1>
-      <div>
-        <h3>Contact Us</h3>
-        <SocialMediaDiv>
-          <SocialMediaImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
-            alt="facebook logo"
-          />
-          <SocialMediaImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
-            alt="twitter logo"
-          />
-          <SocialMediaImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-            alt="linkedin logo"
-          />
-        </SocialMediaDiv>
-        <p>Enjoy! Now you can see your recommendations</p>
-      </div>
-    </SideBar>
+              <Link to="/gaming" className="link-text">
+                <OptionDiv>
+                  <SiYoutubegaming />
+                  <SideBarRoutes>Gaming</SideBarRoutes>
+                </OptionDiv>
+              </Link>
+              <Link to="/saved" className="link-text">
+                <OptionDiv>
+                  <MdPlaylistAdd />
+                  <SideBarRoutes>Saved Videos</SideBarRoutes>
+                </OptionDiv>
+              </Link>
+            </SideBarDiv1>
+            <div>
+              <h3>Contact Us</h3>
+              <SocialMediaDiv>
+                <SocialMediaImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
+                  alt="facebook logo"
+                />
+                <SocialMediaImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
+                  alt="twitter logo"
+                />
+                <SocialMediaImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
+                  alt="linkedin logo"
+                />
+              </SocialMediaDiv>
+              <p>Enjoy! Now you can see your recommendations</p>
+            </div>
+          </SideBar>
+        )
+      }}
+    </myContext.Consumer>
   )
 
   showProgress = () => (
@@ -131,44 +140,54 @@ class Trending extends Component {
   showSuccess = () => {
     const {trendingVideosList} = this.state
     return (
-      <MainSection>
-        <TrendingSectionHead>
-          <Div1>
-            <FaFire />
-          </Div1>
-          <h1>Trending</h1>
-        </TrendingSectionHead>
-        <TrendingUlContainer>
-          {trendingVideosList.map(each => (
-            <VideoList each={each} key={each.id} />
-          ))}
-        </TrendingUlContainer>
-        {/* <ul>
-          {trendingVideosList.map(each => (
-            <li>{each.title}</li>
-          ))}
-        </ul> */}
-      </MainSection>
+      <myContext.Consumer>
+        {value => {
+          const {isDark} = value
+          return (
+            <MainSection>
+              <TrendingSectionHead>
+                <Div1>
+                  <FaFire />
+                </Div1>
+                <h1>Trending</h1>
+              </TrendingSectionHead>
+              <TrendingUlContainer>
+                {trendingVideosList.map(each => (
+                  <VideoList each={each} key={each.id} />
+                ))}
+              </TrendingUlContainer>
+            </MainSection>
+          )
+        }}
+      </myContext.Consumer>
     )
   }
 
   showFailureView = () => (
-    <div className="failure-div">
-      <img
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt=""
-        className="failure-image"
-      />
-      <h3>Oops! Something Went Wrong</h3>
-      <p>
-        We are having some trouble completing your request.
-        <br />
-        Please try again.
-      </p>
-      <button type="button" onClick={this.getTrendingVideos}>
-        Retry
-      </button>
-    </div>
+    <myContext.Consumer>
+      {value => {
+        const {isDark} = value
+        const showDarkBackground = isDark ? 'dark-failure-div' : 'failure-div'
+        return (
+          <div className={showDarkBackground}>
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+              alt=""
+              className="failure-image"
+            />
+            <h3>Oops! Something Went Wrong</h3>
+            <p>
+              We are having some trouble completing your request.
+              <br />
+              Please try again.
+            </p>
+            <button type="button" onClick={this.getTrendingVideos}>
+              Retry
+            </button>
+          </div>
+        )
+      }}
+    </myContext.Consumer>
   )
 
   renderView = () => {
@@ -188,13 +207,22 @@ class Trending extends Component {
   render() {
     const {trendingVideosList} = this.state
     return (
-      <>
-        <Header />
-        <Main>
-          {this.showSideBar()}
-          {this.renderView()}
-        </Main>
-      </>
+      <myContext.Consumer>
+        {value => {
+          const {isDark} = value
+          return (
+            <>
+              <HeaderDiv show={isDark}>
+                <Header />
+              </HeaderDiv>
+              <Main show={isDark}>
+                {this.showSideBar()}
+                {this.renderView()}
+              </Main>
+            </>
+          )
+        }}
+      </myContext.Consumer>
     )
   }
 }

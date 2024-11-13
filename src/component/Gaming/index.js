@@ -10,6 +10,7 @@ import {MdPlaylistAdd} from 'react-icons/md'
 
 import Header from '../Header'
 import GamingList from '../GamingList'
+import myContext from '../../context/myContext'
 
 import {
   SocialMediaImage,
@@ -24,6 +25,7 @@ import {
   TrendingSectionHead,
   Div1,
   GamingSectionMainDiv,
+  HeaderDiv,
 } from './styled'
 
 const ApiConstants = {
@@ -62,53 +64,60 @@ class Gaming extends Component {
   }
 
   showSideBar = () => (
-    <SideBar>
-      <SideBarDiv1>
-        <Link to="/" className="link-text">
-          <OptionDiv>
-            <AiFillHome />
-            <SideBarRoutes>Home</SideBarRoutes>
-          </OptionDiv>
-        </Link>
-        <Link to="/trending" className="link-text">
-          <OptionDiv>
-            <FaFire />
-            <SideBarRoutes>Trending</SideBarRoutes>
-          </OptionDiv>
-        </Link>
+    <myContext.Consumer>
+      {value => {
+        const {isDark} = value
+        return (
+          <SideBar show={isDark}>
+            <SideBarDiv1>
+              <Link to="/" className="link-text">
+                <OptionDiv>
+                  <AiFillHome />
+                  <SideBarRoutes>Home</SideBarRoutes>
+                </OptionDiv>
+              </Link>
+              <Link to="/trending" className="link-text">
+                <OptionDiv>
+                  <FaFire />
+                  <SideBarRoutes>Trending</SideBarRoutes>
+                </OptionDiv>
+              </Link>
 
-        <Link to="/gaming" className="link-text">
-          <HomeOption>
-            <SiYoutubegaming />
-            <SideBarRoutes>Gaming</SideBarRoutes>
-          </HomeOption>
-        </Link>
-        <Link to="/saved" className="link-text">
-          <OptionDiv>
-            <MdPlaylistAdd />
-            <SideBarRoutes>Saved Videos</SideBarRoutes>
-          </OptionDiv>
-        </Link>
-      </SideBarDiv1>
-      <div>
-        <h3>Contact Us</h3>
-        <SocialMediaDiv>
-          <SocialMediaImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
-            alt="facebook logo"
-          />
-          <SocialMediaImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
-            alt="twitter logo"
-          />
-          <SocialMediaImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-            alt="linkedin logo"
-          />
-        </SocialMediaDiv>
-        <p>Enjoy! Now you can see your recommendations</p>
-      </div>
-    </SideBar>
+              <Link to="/gaming" className="link-text">
+                <HomeOption show={isDark}>
+                  <SiYoutubegaming />
+                  <SideBarRoutes>Gaming</SideBarRoutes>
+                </HomeOption>
+              </Link>
+              <Link to="/saved" className="link-text">
+                <OptionDiv>
+                  <MdPlaylistAdd />
+                  <SideBarRoutes>Saved Videos</SideBarRoutes>
+                </OptionDiv>
+              </Link>
+            </SideBarDiv1>
+            <div>
+              <h3>Contact Us</h3>
+              <SocialMediaDiv>
+                <SocialMediaImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
+                  alt="facebook logo"
+                />
+                <SocialMediaImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
+                  alt="twitter logo"
+                />
+                <SocialMediaImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
+                  alt="linkedin logo"
+                />
+              </SocialMediaDiv>
+              <p>Enjoy! Now you can see your recommendations</p>
+            </div>
+          </SideBar>
+        )
+      }}
+    </myContext.Consumer>
   )
 
   showProgress = () => (
@@ -121,39 +130,54 @@ class Gaming extends Component {
     const {gamesList} = this.state
     gamesList.map(each => console.log(each))
     return (
-      <>
-        <TrendingSectionHead>
-          <Div1>
-            <SiYoutubegaming />
-          </Div1>
-          <h1>Gaming</h1>
-        </TrendingSectionHead>
-        <GamingSectionMainDiv>
-          {gamesList.map(each => (
-            <GamingList key={each.id} each={each} />
-          ))}
-        </GamingSectionMainDiv>
-      </>
+      <myContext.Consumer>
+        {value => {
+          const {isDark} = value
+          return (
+            <>
+              <TrendingSectionHead>
+                <Div1>
+                  <SiYoutubegaming />
+                </Div1>
+                <h1>Gaming</h1>
+              </TrendingSectionHead>
+              <GamingSectionMainDiv show={isDark}>
+                {gamesList.map(each => (
+                  <GamingList key={each.id} each={each} />
+                ))}
+              </GamingSectionMainDiv>
+            </>
+          )
+        }}
+      </myContext.Consumer>
     )
   }
 
   showFailureView = () => (
-    <div className="failure-div">
-      <img
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt=""
-        className="failure-image"
-      />
-      <h3>Oops! Something Went Wrong</h3>
-      <p>
-        We are having some trouble completing your request.
-        <br />
-        Please try again.
-      </p>
-      <button type="button" onClick={this.getGamingList}>
-        Retry
-      </button>
-    </div>
+    <myContext.Consumer>
+      {value => {
+        const {isDark} = value
+        const showDarkBackground = isDark ? 'dark-failure-div' : 'failure-div'
+        return (
+          <div className={showDarkBackground}>
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+              alt=""
+              className="failure-image"
+            />
+            <h3>Oops! Something Went Wrong</h3>
+            <p>
+              We are having some trouble completing your request.
+              <br />
+              Please try again.
+            </p>
+            <button type="button" onClick={this.getGamingList}>
+              Retry
+            </button>
+          </div>
+        )
+      }}
+    </myContext.Consumer>
   )
 
   renderAllView = () => {
@@ -173,13 +197,23 @@ class Gaming extends Component {
 
   render() {
     return (
-      <>
-        <Header />
-        <Main>
-          {this.showSideBar()}
-          <MainSection>{this.renderAllView()}</MainSection>
-        </Main>
-      </>
+      <myContext.Consumer>
+        {value => {
+          const {isDark} = value
+          return (
+            <>
+              <HeaderDiv show={isDark}>
+                <Header />
+              </HeaderDiv>
+
+              <Main show={isDark}>
+                {this.showSideBar()}
+                <MainSection>{this.renderAllView()}</MainSection>
+              </Main>
+            </>
+          )
+        }}
+      </myContext.Consumer>
     )
   }
 }

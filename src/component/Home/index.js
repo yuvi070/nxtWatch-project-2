@@ -113,19 +113,27 @@ class Home extends Component {
   }
 
   noVideosView = () => (
-    <div className="failure-div">
-      <img
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
-        alt="no videos"
-        className="failure-image"
-      />
-      <p>No Search Result Found</p>
-      <p>
-        Try different keywords or remove search filters.
-        <br />
-        Please try again.
-      </p>
-    </div>
+    <myContext.Consumer>
+      {value => {
+        const {isDark} = value
+        const showDarkBackground = isDark ? 'dark-failure-div' : 'failure-div'
+        return (
+          <div className={showDarkBackground}>
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
+              alt="no videos"
+              className="failure-image"
+            />
+            <p>No Search Result Found</p>
+            <p>
+              Try different keywords or remove search filters.
+              <br />
+              Please try again.
+            </p>
+          </div>
+        )
+      }}
+    </myContext.Consumer>
   )
 
   showBottomSection = () => {
@@ -175,22 +183,30 @@ class Home extends Component {
   )
 
   showFailureView = () => (
-    <div className="failure-div">
-      <img
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt=""
-        className="failure-image"
-      />
-      <h3>Oops! Something Went Wrong</h3>
-      <p>
-        We are having some trouble completing your request.
-        <br />
-        Please try again.
-      </p>
-      <button type="button" onClick={this.getAllVideos}>
-        Retry
-      </button>
-    </div>
+    <myContext.Consumer>
+      {value => {
+        const {isDark} = value
+        const showDarkBackground = isDark ? 'dark-failure-div' : 'failure-div'
+        return (
+          <div className={showDarkBackground}>
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+              alt=""
+              className="failure-image"
+            />
+            <h3>Oops! Something Went Wrong</h3>
+            <p>
+              We are having some trouble completing your request.
+              <br />
+              Please try again.
+            </p>
+            <button type="button" onClick={this.getAllVideos}>
+              Retry
+            </button>
+          </div>
+        )
+      }}
+    </myContext.Consumer>
   )
 
   renderAllViews = () => {

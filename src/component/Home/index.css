@@ -19,3 +19,13 @@
 .failure-image {
   width: 15%;
 }
+.dark-failure-div {
+  background-color: #181818;
+  display: flex;
+  height: 57vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}

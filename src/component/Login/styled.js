@@ -6,6 +6,7 @@ export const Home = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: ${props => (props.show ? '#181818' : 'white')};
 `
 export const Body = styled.div`
   width: 33%;
@@ -14,6 +15,7 @@ export const Body = styled.div`
   border-radius: 8px;
   margin: auto;
   padding: 25px;
+  background-color: ${props => (props.show ? '#231f20' : 'white')};
 `
 export const LoginLogoImage = styled.img`
   width: 200px;
@@ -21,6 +23,9 @@ export const LoginLogoImage = styled.img`
 `
 export const LabelText = styled.label`
   color: #94a3b8;
+  color: ${props => (props.show ? 'white' : 'black')};
+  font-weight: 500;
+  font-size: 14px;
 `
 export const Input = styled.input`
   width: 100%;
@@ -30,6 +35,8 @@ export const Input = styled.input`
   font-size: 15px;
   outline: none;
   padding-left: 10px;
+  background-color: ${props => (props.show ? '#231f20' : 'white')};
+  color: ${props => (props.show ? 'white' : 'black')};
 `
 export const InputBox = styled.div`
   text-align: left;

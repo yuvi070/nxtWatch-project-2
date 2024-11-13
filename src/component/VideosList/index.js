@@ -22,7 +22,7 @@ const VideoList = props => {
                   <VideoDiv1 show={isDark}>
                     <h3>{title}</h3>
                     <p>{each.channel.name}</p>
-                    <VideoDiv2>
+                    <VideoDiv2 show={isDark}>
                       <p>{`${each.viewCount} views`}</p>
                       <BsDot />
                       <p>{formattedDate}</p>

@@ -8,7 +8,7 @@ export const VideoCard = styled.li`
   margin-bottom: 10px;
   list-style: none;
   font-family: Roboto;
-  //   background-color: ${props => (props.show ? '#181818' : 'white')};
+  color: ${props => (props.show ? 'white' : 'black')};
 `
 
 export const ThumbnailImage = styled.img`
@@ -21,5 +21,5 @@ export const VideoDiv1 = styled.div`
 export const VideoDiv2 = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${props => (props.show ? '#181818' : 'white')};
+  color: ${props => (props.show ? 'white' : 'black')};
 `
