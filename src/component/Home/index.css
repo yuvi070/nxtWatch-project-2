@@ -1,5 +1,6 @@
 .link-text {
   text-decoration: none;
+  width: 100%;
 }
 .loader-container {
   display: flex;
@@ -28,4 +29,7 @@
   align-items: center;
   text-align: center;
   color: white;
+}
+.contacts-div {
+  padding-left: 25px;
 }

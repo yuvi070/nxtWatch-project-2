@@ -36,6 +36,7 @@ import {
   ChannelLogo,
   ChannelInfo,
   ChannelDescription,
+  HeaderDiv,
 } from './styled'
 
 const ApiConstants = {
@@ -97,53 +98,60 @@ class VideoItem extends Component {
   }
 
   showSideBar = () => (
-    <SideBar>
-      <SideBarDiv1>
-        <Link to="/" className="link-text">
-          <OptionDiv>
-            <AiFillHome />
-            <SideBarRoutes>Home</SideBarRoutes>
-          </OptionDiv>
-        </Link>
-        <Link to="/trending" className="link-text">
-          <OptionDiv>
-            <FaFire />
-            <SideBarRoutes>Trending</SideBarRoutes>
-          </OptionDiv>
-        </Link>
+    <myContext.Consumer>
+      {value => {
+        const {isDark} = value
+        return (
+          <SideBar show={isDark}>
+            <SideBarDiv1>
+              <Link to="/" className="link-text">
+                <OptionDiv>
+                  <AiFillHome />
+                  <SideBarRoutes>Home</SideBarRoutes>
+                </OptionDiv>
+              </Link>
+              <Link to="/trending" className="link-text">
+                <OptionDiv>
+                  <FaFire />
+                  <SideBarRoutes>Trending</SideBarRoutes>
+                </OptionDiv>
+              </Link>
 
-        <Link to="/gaming" className="link-text">
-          <OptionDiv>
-            <SiYoutubegaming />
-            <SideBarRoutes>Gaming</SideBarRoutes>
-          </OptionDiv>
-        </Link>
-        <Link to="/saved" className="link-text">
-          <OptionDiv>
-            <MdPlaylistAdd />
-            <SideBarRoutes>Saved Videos</SideBarRoutes>
-          </OptionDiv>
-        </Link>
-      </SideBarDiv1>
-      <div>
-        <h3>Contact Us</h3>
-        <SocialMediaDiv>
-          <SocialMediaImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
-            alt="facebook logo"
-          />
-          <SocialMediaImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
-            alt="twitter logo"
-          />
-          <SocialMediaImage
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-            alt="linkedin logo"
-          />
-        </SocialMediaDiv>
-        <p>Enjoy! Now you can see your recommendations</p>
-      </div>
-    </SideBar>
+              <Link to="/gaming" className="link-text">
+                <OptionDiv>
+                  <SiYoutubegaming />
+                  <SideBarRoutes>Gaming</SideBarRoutes>
+                </OptionDiv>
+              </Link>
+              <Link to="/saved" className="link-text">
+                <OptionDiv>
+                  <MdPlaylistAdd />
+                  <SideBarRoutes>Saved Videos</SideBarRoutes>
+                </OptionDiv>
+              </Link>
+            </SideBarDiv1>
+            <div>
+              <h3>Contact Us</h3>
+              <SocialMediaDiv>
+                <SocialMediaImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
+                  alt="facebook logo"
+                />
+                <SocialMediaImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
+                  alt="twitter logo"
+                />
+                <SocialMediaImage
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
+                  alt="linkedin logo"
+                />
+              </SocialMediaDiv>
+              <p>Enjoy! Now you can see your recommendations</p>
+            </div>
+          </SideBar>
+        )
+      }}
+    </myContext.Consumer>
   )
 
   showProgress = () => (
@@ -279,13 +287,23 @@ class VideoItem extends Component {
 
   render() {
     return (
-      <>
-        <Header />
-        <Main>
-          {this.showSideBar()}
-          <MainSection>{this.renderAllView()}</MainSection>
-        </Main>
-      </>
+      <myContext.Consumer>
+        {value => {
+          const {isDark} = value
+          return (
+            <>
+              <HeaderDiv show={isDark}>
+                <Header />
+              </HeaderDiv>
+
+              <Main show={isDark}>
+                {this.showSideBar()}
+                <MainSection>{this.renderAllView()}</MainSection>
+              </Main>
+            </>
+          )
+        }}
+      </myContext.Consumer>
     )
   }
 }

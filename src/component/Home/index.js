@@ -96,15 +96,6 @@ class Home extends Component {
 
   onSubmitSearchInputs = event => {
     event.preventDefault()
-    // const {searchInput, allVideoList} = this.state
-    // // filter array based on input value;
-    // // const filteredArray = allVidoeList.inlcude
-    // const filteredArray = allVideoList.filter(each => {
-    //   const lowerTitle = each.title.toLowerCase()
-    //   const lowerInput = searchInput.toLowerCase()
-    //   return lowerTitle.includes(lowerInput)
-    // })
-    // this.setState({allVideoList: filteredArray})
     this.getAllVideos()
   }
 
@@ -256,7 +247,7 @@ class Home extends Component {
                 </OptionDiv>
               </Link>
             </SideBarDiv1>
-            <div>
+            <div className="contacts-div">
               <h3>Contact Us</h3>
               <SocialMediaDiv>
                 <SocialMediaImage

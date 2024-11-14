@@ -107,7 +107,7 @@ class Trending extends Component {
                 </OptionDiv>
               </Link>
             </SideBarDiv1>
-            <div>
+            <div className="contacts-div">
               <h3>Contact Us</h3>
               <SocialMediaDiv>
                 <SocialMediaImage

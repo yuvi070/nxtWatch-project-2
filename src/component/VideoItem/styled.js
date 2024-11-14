@@ -4,6 +4,7 @@ export const Main = styled.div`
   display: flex;
   width: 100%;
   padding: 10px;
+  background-color: ${props => (props.show ? '#181818' : 'white')};
 `
 
 export const MainSection = styled.div`
@@ -11,6 +12,7 @@ export const MainSection = styled.div`
   max-height: 90vh;
   overflow: auto;
   padding-bottom: 25px;
+  padding-left: 10px;
 `
 
 export const SocialMediaImage = styled.img`
@@ -37,6 +39,7 @@ export const SideBar = styled.div`
   justify-content: space-between;
   padding-bottom: 15px;
   padding-right: 25px;
+  background-color: ${props => (props.show ? '#212121' : 'white')};
 `
 export const OptionDiv = styled.div`
   display: flex;
@@ -120,4 +123,7 @@ export const ChannelInfo = styled.div`
 export const ChannelDescription = styled.div`
   margin-left: 25px;
   font-size: 17px;
+`
+export const HeaderDiv = styled.div`
+  background-color: ${props => (props.show ? '#212121' : 'white')};
 `

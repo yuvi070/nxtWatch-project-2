@@ -182,7 +182,7 @@ class Saved extends Component {
                 </HomeOption>
               </Link>
             </SideBarDiv1>
-            <div>
+            <div className="contacts-div">
               <h3>Contact Us</h3>
               <SocialMediaDiv>
                 <SocialMediaImage

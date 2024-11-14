@@ -85,7 +85,6 @@ export const SideBarDiv1 = styled.div`
 `
 export const SocialMediaDiv = styled.div`
   display: flex;
-  margin-left: 25px;
 `
 export const SideBar = styled.div`
   width: 20%;
@@ -103,11 +102,13 @@ export const OptionDiv = styled.div`
   align-items: center;
   text-decoration: none;
   padding-left: 25px;
+  width: 100%;
 `
 export const HomeOption = styled(OptionDiv)`
-  background-color: ${props => (props.show ? '#383838' : 'yellowgreen')};
-  color: #ff0000;
+  background-color: ${props => (props.show ? '#383838' : '#cbd5e1')};
+  color: ${props => (props.show ? '#ebebeb' : '#ff0000')};
   text-decoration: none;
+  width: 100%;
 `
 export const HeaderDiv = styled.div`
   background-color: ${props => (props.show ? '#212121' : 'white')};
